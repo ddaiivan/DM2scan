@@ -91,6 +91,111 @@ section {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Media query for mobile responsiveness */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #DM2scan-logo {
+        max-width: 80px; /* Smaller logo on mobile */
+    }
+
+    header h1 {
+        font-size: 2em; /* Smaller font size for heading */
+    }
+
+    header p {
+        font-size: 1em; /* Smaller font size for paragraph */
+    }
+
+    nav ul {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    nav li {
+        display: block; /* Stack navigation items */
+        margin: 0.5rem 0;
+        width: 100%;
+    }
+
+     nav a {
+        display: block; /* Make links full-width */
+        text-align: center; /* Center-align text */
+    }
+
+    main {
+        padding: 10px; /* Reduced padding */
+    }
+
+    section {
+        width: 100%; /* Full-width sections */
+        padding: 15px;
+    }
+
+    .input-group {
+        flex-direction: column; /* Stack input fields */
+    }
+
+    input[type="number"] {
+        width: 100%; /* Full-width input fields */
+        margin-bottom: 10px;
+    }
+
+    .input-chart-container {
+        flex-direction: column; /* Stack input and chart */
+    }
+
+    .chart-container {
+        width: 100%; /* Full-width chart */
+        height: auto; /* Adjust height automatically */
+    }
+
+    #calculate {
+        position: static; /* Reset button position */
+        margin-top: 10px;
+    }
+
+    #features,
+    #diagnosis {
+        max-width: 100%; /* Full width on mobile */
+    }
+
+    #hepatitis-b-diagnosis .risk-factor-group {
+        grid-template-columns: 1fr; /* Single column layout */
+    }
+
+    .image-container img {
+        max-width: 100%; /* Ensure images fit within container */
+    }
+      /* Adjust the IMT bar for smaller screens */
+    #imt-bar-container {
+        height: auto; /* Allow height to adjust */
+        flex-wrap: wrap; /* Allow segments to wrap */
+    }
+
+    .imt-bar-segment {
+        font-size: 0.8em; /* Smaller font size */
+        padding: 5px 0; /* Add some padding */
+        justify-content: flex-start; /* Align text to the left */
+    }
+
+    .imt-threshold {
+        font-size: 0.7em; /* Smaller font for thresholds */
+        transform: translate(-50%, 0); /* Adjust vertical position */
+        top: auto;
+        bottom: -15px; /* Position below the bar */
+    }
+        /* Adjust positioning of threshold labels */
+    #imt-threshold-18-5,
+    #imt-threshold-25,
+    #imt-threshold-30 {
+        transform: translate(-50%, 0);
+    }
+}
+
 #diagnosis-tool-3-content h2 {
   color: #DC8665;
 }

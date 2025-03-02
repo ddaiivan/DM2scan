@@ -29,29 +29,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (imt < 18.5) {
                     interpretation = 'Underweight';
+                      // Calculate target weight for ideal BMI (using 21.75 as midpoint)
+                    const targetWeight = 21.75 * (height * height);
+                    const weightDifference = targetWeight - weight;
+                    document.getElementById('weight-loss-target').textContent = `To reach an ideal BMI, aim to gain approximately ${weightDifference.toFixed(2)} kg.`;
                 } else if (imt < 25) {
                     interpretation = 'Ideal';
                 } else if (imt < 30) {
                     interpretation = 'Overweight';
                 } else {
                     interpretation = 'Obese';
+                    // Calculate target weight for ideal BMI (using 21.75 as midpoint)
+                    const targetWeight = 21.75 * (height * height);
+                    const weightDifference = weight - targetWeight;
+                    document.getElementById('weight-loss-target').textContent = `To reach an ideal BMI, aim to lose approximately ${weightDifference.toFixed(2)} kg.`;
                 }
 
                 document.getElementById('imt-result').textContent = imt.toFixed(2);
                 document.getElementById('imt-interpretation').textContent = interpretation;
-
-                // Display weight loss target
-                if (interpretation === 'Ideal') {
-                    document.getElementById('weight-loss-target').textContent = 'Your weight is already ideal, so weight loss is not needed.';
-                } else {
-                    // Calculate ideal weight range
-                    const idealWeightRange = calculateIdealWeightRange(height);
-
-                    // Calculate weight loss target
-                    const weightLossTarget = calculateWeightLossTarget(weight, idealWeightRange.min);
-
-                    document.getElementById('weight-loss-target').textContent = weightLossTarget > 0 ? `Weight loss target: ${weightLossTarget.toFixed(2)} kg` : 'Your weight is already ideal.';
-                }
 
                 // Create/Update the BMI graph
                 createBMIGraph(height, weight);
