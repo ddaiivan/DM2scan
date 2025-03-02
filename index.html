@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DM2scan</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="pancreas.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <img src="pancreas.png" alt="Logo DM2scan" id="DM2scan-logo">
+        <h1>DM2scan</h1>
+        <p>Assess Your Risks, Maintain Your Health!</p>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#" id="home-link">Home</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section id="welcome">
+            <h2>Welcome to DM2scan! Let's Start Screening Your Diabetes Risk.</h2>
+            <p>DM2scan is a digital platform dedicated to the screening of Type 2 Diabetes Mellitus (T2DM) risk. The platform provides a rapid and straightforward means for individuals to determine their susceptibility to developing the disease.</p>
+        </section>
+
+        <section id="faq-section" style="display: none;">
+            <h2>FAQ</h2>
+            <a href="https://udify.app/chat/ZRNlhnkwjRadOlBs" target="_blank"><button>FAQ with DM2scan</button></a>&nbsp;
+            <a href="https://www.halodoc.com/tanya-dokter" target="_blank"><button>Ask a Doctor</button></a>
+        </section>
+
+        <section id="nutrition-analysis-section" style="display: none;">
+            <h2>Nutrition Analysis</h2>
+            <p><a href="https://udify.app/chat/cbIhRD2ttUeph1xx" target="_blank">Food Nutrition Analysis Information</a></p>
+        </section>
+
+        <section id="imt-calculator" style="display: none;">
+            <h2>BMI Calculator</h2>
+            <div class="input-chart-container">
+                <div>
+                    <div class="input-group">
+                        <label for="weight">Weight (kg):</label>
+                        <input type="number" id="weight" name="weight">
+                    </div>
+                    <div class="input-group">
+                        <label for="height">Height (cm):</label>
+                        <input type="number" id="height" name="height">
+                    </div>
+                    <div class="input-group">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" name="age">
+                    </div>
+                    <div class="input-group">
+                        <label>Gender:</label>
+                        <label for="male"><input type="radio" id="male" name="gender" value="male"> Male</label>
+                        <label for="female"><input type="radio" id="female" name="gender" value="female"> Female</label>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="bmi-chart"></canvas>
+                </div>
+            </div>
+            <button id="calculate">Calculate BMI</button>
+            <div class="result">
+                <p>Your BMI: <span id="imt-result"></span></p>
+                <p>Interpretation: <span id="imt-interpretation"></span></p>
+                <p>Target: <span id="weight-loss-target"></span></p>
+                <div id="imt-bar-container">
+                    <div class="imt-bar-segment" id="imt-kurus">Underweight</div>
+                    <div class="imt-bar-segment" id="imt-ideal">Ideal</div>
+                    <div class="imt-bar-segment" id="imt-gemuk">Overweight</div>
+                    <div class="imt-bar-segment" id="imt-obesitas">Obese</div>
+                    <div id="imt-indicator"></div>
+                    <div class="imt-threshold" id="imt-threshold-18-5">18.5</div>
+                    <div class="imt-threshold" id="imt-threshold-25">25</div>
+                    <div class="imt-threshold" id="imt-threshold-30">30</div>
+                </div>
+            </div>
+        </section>
+      <section id="food-recommendation-section" style="display:none">
+        <h2>Food Recommendation</h2>
+         <button id="detect-location">Get Location</button>
+        <div id="location-info"></div>
+        <div id="city-name"></div>
+        <div id="food-recommendation"></div>
+
+        <section id="diabetes-food-recommendation">
+            <h2>Food Guide for People with Diabetes Mellitus</h2>
+            <div class="image-container">
+                <img src="food/what_can_i_eat-best_foods-American_Diabetes_Association-1.png" alt="Diet 1">
+            </div>
+            <div class="image-container">
+                <img src="food/what_can_i_eat-best_foods-American_Diabetes_Association-2.png" alt="Diet 2">
+            </div>
+        </section>
+      </section>
+
+       <section id="hepatitis-b-diagnosis" style="display: none;">
+            <h2>Type 2 Diabetes Mellitus Screening</h2>
+            <button type="button" id="toggle-risk-factors">Risk Factors</button>
+            <div id="risk-factors-group" class="risk-factor-group" style="display: none;">
+                <div>
+                    <input type="checkbox" id="risk-overweight" name="risk-overweight">
+                    <label for="risk-overweight">Overweight (BMI ≥ 23 kg/m²)</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="risk-physical-inactivity" name="risk-physical-inactivity">
+                    <label for="risk-physical-inactivity">Lack of physical activity</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="risk-family-history" name="risk-family-history">
+                    <label for="risk-family-history">Family history (first-degree relative) with DM</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="risk-ethnicity" name="risk-ethnicity">
+                    <label for="risk-ethnicity">High-risk ethnic group</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="risk-baby-weight" name="risk-baby-weight">
+                    <label for="risk-baby-weight">History of giving birth to a baby with birth weight > 4 kg or gestational DM</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="risk-hypertension" name="risk-hypertension">
+                    <label for="risk-hypertension">Hypertension (≥140/90 mmHg or on therapy)</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="risk-hdl-triglycerides" name="risk-hdl-triglycerides">
+                    <label for="risk-hdl-triglycerides">HDL < 35 mg/dL or triglycerides > 250 mg/dL</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="risk-pcos" name="risk-pcos">
+                    <label for="risk-pcos">Women with polycystic ovary syndrome (PCOS)</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="risk-prediabetes" name="risk-prediabetes">
+                    <label for="risk-prediabetes">History of prediabetes</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="risk-obesity" name="risk-obesity">
+                    <label for="risk-obesity">Severe obesity or acanthosis nigricans</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="risk-cardiovascular" name="risk-cardiovascular">
+                    <label for="risk-cardiovascular">History of cardiovascular disease</label>
+                </div>
+            </div>
+
+            <button type="button" id="toggle-symptoms">Classic Symptoms of DM</button>
+            <div id="symptoms-group" class="risk-factor-group" style="display:none;">
+                <div>
+                    <input type="checkbox" id="symptom-polydipsia" name="symptom-polydipsia">
+                    <label for="symptom-polydipsia">Polydipsia (frequent thirst)</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="symptom-polyphagia" name="symptom-polyphagia">
+                    <label for="symptom-polyphagia">Polyphagia (frequent hunger)</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="symptom-polyuria" name="symptom-polyuria">
+                    <label for="symptom-polyuria">Polyuria (frequent urination)</label>
+                </div>
+            </div>
+            <button type="button" id="calculate-risk">Calculate Risk</button>
+            <div id="diabetes-risk-result"></div>
+       </section>
+
+       <section id="glucose-screening-section" style="display: none;">
+            <h2>Glucose Screening</h2>
+            <p>Enter your blood glucose test results to determine the possible diagnosis of diabetes or prediabetes based on clinical guidelines.</p>
+
+            <div class="input-group">
+                <label for="gdp">FPG (mg/dL):</label>
+                <input type="number" id="gdp" name="gdp">
+            </div>
+            <div class="input-group">
+                <label for="gds">RPG (mg/dL):</label>
+                <input type="number" id="gds" name="gds">
+            </div>
+            <div class="input-group">
+                <label for="ttgo">OGTT (mg/dL):</label>
+                <input type="number" id="ttgo" name="ttgo">
+            </div>
+            <div class="input-group">
+                <label for="classic-symptoms"><input type="checkbox" id="classic-symptoms" name="classic-symptoms"> Classic Symptoms (+)</label>
+            </div>
+
+            <button type="button" id="calculate-glucose">Calculate Risk</button>
+            <div id="glucose-result" style="display: none;"></div>
+        </section>
+
+        <section id="hba1c-screening-section" style="display: none;">
+            <h2>HbA1c Screening</h2>
+            <p>Enter your HbA1c test result to determine the possible diagnosis of diabetes or prediabetes based on clinical guidelines.</p>
+            <div class="input-group">
+                <label for="hba1c">HbA1c (%):</label>
+                <input type="number" id="hba1c" name="hba1c">
+            </div>
+            <div class="input-group">
+                <label for="bg-mgdl">Blood Glucose (mg/dL):</label>
+                <input type="number" id="bg-mgdl" name="bg-mgdl">
+            </div>
+            <div class="input-group">
+                <label for="bg-mmol">Blood Glucose (mmol/L):</label>
+                <input type="number" id="bg-mmol" name="bg-mmol">
+            </div>
+            <button type="button" id="calculate-hba1c">Calculate</button>
+            <div id="hba1c-result" style="display: none;"></div>
+            <div id="input-ranges">
+                <p><strong>Valid Input Ranges:</strong></p>
+                <ul>
+                    <li>HbA1c (%): Minimum: 4.0%, Maximum: 14.0%</li>
+                    <li>Mean Blood Glucose (mg/dL): Minimum: 50 mg/dL, Maximum: 380 mg/dL</li>
+                    <li>Mean Blood Glucose (mmol/L): Minimum: 2.6 mmol/L, Maximum: 21.1 mmol/L</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="diagnosis-tool-3-content" style="display: none;">
+            <h2>Workout Recommendations for Diabetes Patients</h2>
+            <p>This section provides safe exercise recommendations for diabetes patients based on their blood glucose levels, medication use, and exercise goals.</p>
+
+            <!-- 1. Blood Glucose Level Input & Exercise Guidance -->
+            <h3>Blood Glucose & Exercise Guidance</h3>
+            <div class="input-group">
+                <label for="blood-glucose">Pre-Exercise Blood Glucose (mg/dL):</label>
+                <input type="number" id="blood-glucose" name="blood-glucose">
+            </div>
+            <p>Input Pre-Exercise Blood Glucose data ranging from <90 to ≥350 (mg/dL).</p>
+            <div id="glucose-recommendation">
+                <!-- Recommendations will be displayed here -->
+            </div>
+
+            <!-- 2. Insulin Adjustment Guide -->
+            <h3>Insulin Adjustment Guide (if insulin taken within 90 min)</h3>
+            <div class="input-group">
+                <label for="exercise-intensity">Exercise Intensity:</label>
+                <select id="exercise-intensity">
+                    <option value="mild">Mild Aerobic (~25% VO2max)</option>
+                    <option value="moderate">Moderate Aerobic (~50% VO2max)</option>
+                    <option value="heavy">Heavy Aerobic (70%-75% VO2max)</option>
+                    <option value="intense">Intense Aerobic/Anaerobic (>80% VO2max)</option>
+                </select>
+            </div>
+             <div class="input-group">
+                <label for="exercise-duration">Exercise Duration:</label>
+                <select id="exercise-duration">
+                    <option value="30">30 min</option>
+                    <option value="60">60 min</option>
+                </select>
+            </div>
+            <div id="insulin-adjustment-recommendation">
+                <!-- Recommendations will be displayed here -->
+            </div>
+
+            <!-- 3. Exercise Training Recommendations -->
+            <h3>Exercise Training Recommendations</h3>
+            <div id="exercise-recommendations">
+                <div class="exercise-category">
+                    <h4>🚶‍♂️ Aerobic Training</h4>
+                    <ul>
+                        <li><strong>Examples:</strong> Walking, cycling, swimming, HIIT</li>
+                        <li><strong>Intensity:</strong> Moderate to vigorous</li>
+                        <li><strong>Duration:</strong> 150 min/week (moderate) or 75 min/week (vigorous)</li>
+                        <li><strong>Frequency:</strong> 3–7 days/week</li>
+                    </ul>
+                </div>
+                <div class="exercise-category">
+                    <h4>🏋️ Resistance Training</h4>
+                    <ul>
+                        <li><strong>Examples:</strong> Free weights, resistance bands, bodyweight exercises</li>
+                        <li><strong>Intensity:</strong> Moderate to vigorous (10–15 reps per set)</li>
+                        <li><strong>Duration:</strong> 8–10 exercises, 1–3 sets</li>
+                        <li><strong>Frequency:</strong> At least 2 nonconsecutive days/week, preferably 3</li>
+                    </ul>
+                </div>
+                <div class="exercise-category">
+                    <h4>🧘 Flexibility & Balance</h4>
+                    <ul>
+                        <li><strong>Examples:</strong> Yoga, static/dynamic stretching, tai chi</li>
+                        <li><strong>Intensity:</strong> Stretch to tightness or slight discomfort</li>
+                        <li><strong>Duration:</strong> 10–30 sec per stretch, 2–4 repetitions</li>
+                        <li><strong>Frequency:</strong> ≥2–3 days/week</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 4. Medication Considerations -->
+            <h3>Medication Considerations & Adjustments for Exercise</h3>
+                <p>Select your medications:</p>
+            <div id="medication-considerations">
+              <h4>Diabetes Medications</h4>
+                <div class="medication-group">
+                    <div><input type="checkbox" id="med-insulin" name="med-insulin"><label for="med-insulin">Insulin</label></div>
+                    <div><input type="checkbox" id="med-secretagogues" name="med-secretagogues"><label for="med-secretagogues">Insulin Secretagogues</label></div>
+                    <div><input type="checkbox" id="med-metformin" name="med-metformin"><label for="med-metformin">Metformin</label></div>
+                    <div><input type="checkbox" id="med-sglt2" name="med-sglt2"><label for="med-sglt2">SGLT2 Inhibitors</label></div>
+                    <div><input type="checkbox" id="med-dpp4" name="med-dpp4"><label for="med-dpp4">DPP-4 Inhibitors</label></div>
+                    <div><input type="checkbox" id="med-glp1" name="med-glp1"><label for="med-glp1">GLP-1 RAs</label></div>
+                    <div><input type="checkbox" id="med-thiazolidinediones" name="med-thiazolidinediones"><label for="med-thiazolidinediones">Thiazolidinediones</label></div>
+                </div>
+              <h4>Hypertension Medications</h4>
+                <div class="medication-group">
+                    <div><input type="checkbox" id="med-beta-blockers" name="med-beta-blockers"><label for="med-beta-blockers">β-Blockers</label></div>
+                    <div><input type="checkbox" id="med-other-antihypertensive" name="med-other-antihypertensive"><label for="med-other-antihypertensive">Other Antihypertensive Agents</label></div>
+                </div>
+              <h4>Cholesterol Medications</h4>
+                <div class="medication-group">
+                    <div><input type="checkbox" id="med-statins" name="med-statins"><label for="med-statins">Statins</label></div>
+                    <div><input type="checkbox" id="med-fibric-acid" name="med-fibric-acid"><label for="med-fibric-acid">Fibric Acid Derivatives</label></div>
+                </div>
+                <div id="medication-recommendation">
+                    <!-- Recommendations will be displayed here -->
+                </div>
+            </div>
+        </section>
+
+        <div style="display: flex; flex-direction: row; justify-content: space-around; width: 100%;">
+            <section id="features">
+                <h2>Personalized Healthcare Features</h2>
+                <button id="imt-calculator-button">BMI Calculator</button>
+                <button id="food-recommendation-button">Food Recommendation</button>
+                <button id="nutrition-analysis-button">Nutrition Analysis</button>
+                <button id="faq-button">FAQ</button>
+            </section>
+
+            <section id="diagnosis">
+                <h2>Diagnosis Features</h2>
+                <button id="diagnosis-tool-1">Type 2 Diabetes Mellitus Screening</button>
+                <button id="diagnosis-tool-2">Glucose Screening</button>
+                <button id="diagnosis-tool-3">Workout Recommendation</button>
+                <button id="diagnosis-tool-4">Latest Information Update</button>
+            </section>
+        </div>
+    </main>
+
+
+    <footer>
+        <p>&copy; 2025 DM2scan. All Rights Reserved.</p>
+    </footer>
+
+
+    <script src="script.js"></script>
+    <script>
+      document.getElementById('toggle-risk-factors').addEventListener('click', function() {
+        var content = document.getElementById('risk-factors-group');
+        if (content.style.display === 'none') {
+          content.style.display = 'grid';
+        } else {
+          content.style.display = 'none';
+        }
+      });
+
+      document.getElementById('toggle-symptoms').addEventListener('click', function() {
+        var content = document.getElementById('symptoms-group');
+        if (content.style.display === 'none') {
+          content.style.display = 'grid';
+        } else {
+          content.style.display = 'none';
+        }
+      });
+
+      document.getElementById('calculate-risk').addEventListener('click', function() {
+          let riskFactors = 0;
+          let symptoms = 0;
+
+          // Count risk factors
+          if (document.getElementById('risk-overweight').checked) riskFactors++;
+          if (document.getElementById('risk-physical-inactivity').checked) riskFactors++;
+          if (document.getElementById('risk-family-history').checked) riskFactors++;
+          if (document.getElementById('risk-ethnicity').checked) riskFactors++;
+          if (document.getElementById('risk-baby-weight').checked) riskFactors++;
+          if (document.getElementById('risk-hypertension').checked) riskFactors++;
+          if (document.getElementById('risk-hdl-triglycerides').checked) riskFactors++;
+          if (document.getElementById('risk-pcos').checked) riskFactors++;
+          if (document.getElementById('risk-prediabetes').checked) riskFactors++;
+          if (document.getElementById('risk-obesity').checked) riskFactors++;
+          if (document.getElementById('risk-cardiovascular').checked) riskFactors++;
+
+          // Count symptoms
+          if (document.getElementById('symptom-polydipsia').checked) symptoms++;
+          if (document.getElementById('symptom-polyphagia').checked) symptoms++;
+          if (document.getElementById('symptom-polyuria').checked) symptoms++;
+
+            let riskLevel = '';
+            let message = '';
+
+            if (riskFactors === 0 && symptoms === 0) {
+                riskLevel = 'No result';
+                message = '';
+            } else if (symptoms >= 2) {
+                riskLevel = 'High';
+                message = 'You are at high risk of developing diabetes. Immediately seek further medical examination and consult with a healthcare professional.';
+            } else if (riskFactors >= 4 && symptoms >= 1) {
+                riskLevel = 'High';
+                message = 'You are at high risk of developing diabetes. Immediately seek further medical examination and consult with a healthcare professional.';
+            } else if (symptoms === 1) {
+                riskLevel = 'Moderate';
+                message = 'You have a moderate risk of diabetes. It is recommended to consult a doctor and start improving your lifestyle.';
+            } else if (riskFactors < 2) {
+                riskLevel = 'Low';
+                message = 'Your risk of diabetes is low. Maintain a healthy lifestyle to prevent diabetes.';
+            } else if (riskFactors >= 2 && riskFactors <= 4) {
+                riskLevel = 'Moderate';
+                message = 'You have a moderate risk of diabetes. It is recommended to consult a doctor and start improving your lifestyle.';
+            } else {
+                riskLevel = 'High';
+                message = 'You are at high risk of developing diabetes. Immediately seek further medical examination and consult with a healthcare professional.';
+            }
+
+          let imtValue = parseFloat(document.getElementById('imt-result').textContent);
+          if (!isNaN(imtValue)) {
+            let indicatorPosition = (imtValue / 40) * 100;
+            if (indicatorPosition > 100) indicatorPosition = 100;
+            document.getElementById('imt-indicator').style.left = `${indicatorPosition}%`;
+          }
+
+        // Get the interpretation element
+        const imtInterpretation = document.getElementById('imt-interpretation');
+
+        // Remove previous classes
+        imtInterpretation.classList.remove('kurus', 'ideal', 'gemuk', 'obesitas');
+
+        // Add class based on interpretation
+        if (imtValue < 18.5) {
+            imtInterpretation.classList.add('kurus');
+        } else if (imtValue < 25) {
+            imtInterpretation.classList.add('ideal');
+        } else if (imtValue < 30) {
+            imtInterpretation.classList.add('gemuk');
+        } else {
+            imtInterpretation.classList.add('obesitas');
+        }
+          document.getElementById('diabetes-risk-result').textContent = `Your Risk: ${riskLevel}. ${message}`;
+      });
+    </script>
+</body>
+</html>
