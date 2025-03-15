@@ -26,22 +26,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 const height = height_cm / 100; // Convert cm to meters
                 const imt = weight / (height * height);
                 let interpretation = '';
+                let targetWeight;
+                let weightDifference;
 
                 if (imt < 18.5) {
                     interpretation = 'Underweight';
-                      // Calculate target weight for ideal BMI (using 21.75 as midpoint)
-                    const targetWeight = 21.75 * (height * height);
-                    const weightDifference = targetWeight - weight;
+                    targetWeight = 18.5 * (height * height);
+                    weightDifference = targetWeight - weight;
                     document.getElementById('weight-loss-target').textContent = `To reach an ideal BMI, aim to gain approximately ${weightDifference.toFixed(2)} kg.`;
                 } else if (imt < 25) {
                     interpretation = 'Ideal';
+                    document.getElementById('weight-loss-target').textContent = 'Your weight is already within the ideal BMI range.';
                 } else if (imt < 30) {
                     interpretation = 'Overweight';
+                    targetWeight = 24.9 * (height * height);
+                    weightDifference = weight - targetWeight;
+                    document.getElementById('weight-loss-target').textContent = `To reach an ideal BMI, aim to lose approximately ${weightDifference.toFixed(2)} kg.`;
                 } else {
                     interpretation = 'Obese';
-                    // Calculate target weight for ideal BMI (using 21.75 as midpoint)
-                    const targetWeight = 21.75 * (height * height);
-                    const weightDifference = weight - targetWeight;
+                    targetWeight = 24.9 * (height * height);
+                    weightDifference = weight - targetWeight;
                     document.getElementById('weight-loss-target').textContent = `To reach an ideal BMI, aim to lose approximately ${weightDifference.toFixed(2)} kg.`;
                 }
 
@@ -616,4 +620,30 @@ function showHepatitisComparison() {
                 }
             }
         });
+}
+
+// Get the modal
+var nutritionModal = document.getElementById("nutrition-modal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("show-nutrition-modal");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close-button")[0];
+
+// When the user clicks the button, open the modal
+btn.onclick = function() {
+    nutritionModal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    nutritionModal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == nutritionModal) {
+        nutritionModal.style.display = "none";
+    }
 }
