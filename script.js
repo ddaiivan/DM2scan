@@ -628,8 +628,14 @@ var nutritionModal = document.getElementById("nutrition-modal");
 // Get the button that opens the modal
 var btn = document.getElementById("show-nutrition-modal");
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close-button")[0];
+// Get the modal
+var nutritionModal = document.getElementById("nutrition-modal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("show-nutrition-modal");
+
+// Get all the <span> elements that close the modal
+var closeButtons = document.getElementsByClassName("close-button");
 
 // When the user clicks the button, open the modal
 btn.onclick = function() {
@@ -637,14 +643,18 @@ btn.onclick = function() {
 }
 
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    nutritionModal.style.display = "none";
+for (let i = 0; i < closeButtons.length; i++) {
+    closeButtons[i].onclick = function() {
+        nutritionModal.style.display = "none";
+        faqModal.style.display = "none"; // Also close the FAQ modal
+    }
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-    if (event.target == nutritionModal) {
+    if (event.target == nutritionModal || event.target == faqModal) {
         nutritionModal.style.display = "none";
+        faqModal.style.display = "none";
     }
 }
 
@@ -654,22 +664,7 @@ var faqModal = document.getElementById("faq-modal");
 // Get the button that opens the modal
 var btn = document.getElementById("show-faq-modal");
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close-button")[1]; // The second close button
-
 // When the user clicks the button, open the modal
 btn.onclick = function() {
     faqModal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-    faqModal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-    if (event.target == faqModal) {
-        faqModal.style.display = "none";
-    }
 }
