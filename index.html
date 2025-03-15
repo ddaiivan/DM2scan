@@ -27,9 +27,16 @@
 
         <section id="faq-section" style="display: none;">
             <h2>FAQ</h2>
-            <a href="https://udify.app/chat/ZRNlhnkwjRadOlBs" target="_blank"><button>FAQ with DM2scan</button></a>&nbsp;
+            <button id="show-faq-modal">QnA with DM2scan</button>&nbsp;
             <a href="https://www.halodoc.com/tanya-dokter" target="_blank"><button>Ask a Doctor</button></a>
         </section>
+
+        <div id="faq-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <iframe src="https://udify.app/chatbot/ZRNlhnkwjRadOlBs" style="width: 100%; height: 100%; min-height: 700px" frameborder="0" allow="microphone"></iframe>
+            </div>
+        </div>
 
         <section id="nutrition-analysis-section" style="display: none;">
             <h2>Nutrition Analysis</h2>
@@ -329,7 +336,7 @@
                 <button id="imt-calculator-button">BMI Calculator</button>
                 <button id="food-recommendation-button">Food Recommendation</button>
                 <button id="nutrition-analysis-button">Nutrition Analysis</button>
-                <button id="faq-button">FAQ</button>
+                <button id="faq-button">QnA</button>
             </section>
 
             <section id="diagnosis">
